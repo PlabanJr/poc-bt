@@ -1,8 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {BleManager} from 'react-native-ble-plx';
+import database from '@react-native-firebase/database';
 
 const App = () => {
+  // const [devices, setdevices] = useState({});
   const manager = React.useRef();
   manager.current = new BleManager({
     restoreStateIdentifier: 'restoreStateIdentifier',
@@ -20,8 +22,6 @@ const App = () => {
     }, true);
   }, []);
 
-  const UUID = ['0B44D165-72C8-F24E-DCC2-17209387BA0C'];
-
   const scanAndConnect = () => {
     console.log('>> SCAN');
     manager.current.startDeviceScan(null, null, (error, device) => {
@@ -31,36 +31,39 @@ const App = () => {
         return;
       }
 
+      if (device) {
+        database()
+          .ref('/sccannedDevices')
+          .update({
+            [device.id]: device.id,
+          })
+          .then(() => console.log('Data set.'))
+          .catch((e) => console.log('Error DB', e));
+      }
+
       // Check if it is a device you are looking for based on advertisement data
       // or other criteria.
       // Stop scanning as it's not necessary if you are scanning for one device.
       // manager.current.stopDeviceScan();
       // Proceed with connection.
 
-      device
-        .connect()
-        .then((connectedDevice) => {
-          return connectedDevice.discoverAllServicesAndCharacteristics(
-            connectedDevice.id,
-          );
-        })
-        .then((newDevice) => {
-          // Do work on device with services and characteristics
-          console.log('>> characteristics', newDevice);
-        })
-        .catch((e) => {
-          console.log('>> err', e);
-        });
+      // device
+      //   .connect()
+      //   .then((connectedDevice) => {
+      //     return connectedDevice.discoverAllServicesAndCharacteristics();
+      //   })
+      //   .then((newDevice) => {
+      //     // Do work on device with services and characteristics
+      //     console.log('>> characteristics', newDevice);
+      //   })
+      //   .catch((e) => {
+      //     console.log('>> err', e);
+      //   });
     });
   };
 
   const search = () => {
     scanAndConnect();
-
-    manager.current
-      .devices()
-      .then((res) => console.log(res, '<<res'))
-      .catch((e) => e, '<< e');
   };
 
   return (

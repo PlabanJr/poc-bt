@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>108011228386-7arje4r5i451ffl4rp1vir43estp35r9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.108011228386-7arje4r5i451ffl4rp1vir43estp35r9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBgEwRZgXi_wZevoMycgoD1w8ZWcVYQIYY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>108011228386</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.poc-bt</string>
+	<key>PROJECT_ID</key>
+	<string>poc-bt</string>
+	<key>STORAGE_BUCKET</key>
+	<string>poc-bt.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:108011228386:ios:a4bb312ad0ce2df779a2bb</string>
+	<key>DATABASE_URL</key>
+	<string>https://poc-bt.firebaseio.com</string>
+</dict>
+</plist>
