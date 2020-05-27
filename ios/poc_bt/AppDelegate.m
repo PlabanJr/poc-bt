@@ -5,6 +5,9 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+#import <BackgroundTasks/BackgroundTasks.h>
+#import <Modules/Background.h>
+
 #if DEBUG
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -48,6 +51,21 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  [[BGTaskScheduler sharedScheduler] registerForTaskWithIdentifier:@"LongRunningTask" usingQueue:dispatch_get_main_queue() launchHandler:^(__kindof BGTask * _Nonnull task) {
+    NSLog(@"Executing LongRunningTask...");
+    id plxBackground = [bridge moduleForName:@"PLXBackground"];
+    if (plxBackground != nil &&
+        [plxBackground isKindOfClass:[PLXBackground class]] &&
+        [task isKindOfClass:[BGProcessingTask class]]) {
+      NSLog(@"Propagating task to a module...");
+      [((PLXBackground*)plxBackground) backgroundTaskExecuting:task];
+    } else {
+      NSLog(@"Cannot propagate task to a module, aborting...");
+      [task setTaskCompletedWithSuccess:true];
+    }
+  }];
+
   return YES;
 }
 
